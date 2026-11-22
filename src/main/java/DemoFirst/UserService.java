@@ -1,6 +1,7 @@
 package DemoFirst;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -22,17 +23,27 @@ public class UserService {
 
     public User updateUser(Long id, User updatedDetails) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found with id: " + id)
+                );
 
         existingUser.setName(updatedDetails.getName());
         existingUser.setEmail(updatedDetails.getEmail());
+
         return userRepository.save(existingUser);
     }
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found with id: " + id);
+            throw new UserNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found with id: " + id)
+                );
     }
 }

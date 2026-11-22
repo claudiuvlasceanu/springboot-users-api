@@ -1,0 +1,18 @@
+
+### Get all users
+GET http://localhost:8080/users
+
+### Request a user that does not exist
+GET http://localhost:8080/users/999
+
+### Create a user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "John Smith",
+  "email": "john.smith@example.com"
+}
+
+### Request an existing user
+GET http://localhost:8080/users/1
